@@ -12,7 +12,7 @@ class MessageList extends Component {
       <main className="messages">
       { this.props.messages.map((data, index) =>
           <Message
-          key={ index }
+          key={ data.id }
           appUsername={ data.username }
           appMessage={ data.content }
           />
