@@ -26,15 +26,15 @@ wss.on('connection', (client) => {
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
       client.send(JSON.stringify(data));
-      console.log('data sent to client from servers', data);
+      // console.log('data sent to client from servers', data);
     });
   };
 
   client.on('message', (incomingMessage) => {
     const receivedMessage = JSON.parse(incomingMessage);
-    console.log('receivedMessage:', incomingMessage);
-    console.log('receivedMessage:', receivedMessage);
-    console.log('receivedMessage.message.type:', receivedMessage.message.type);
+    // console.log('receivedMessage:', incomingMessage);
+    // console.log('receivedMessage:', receivedMessage);
+    // console.log('receivedMessage.message.type:', receivedMessage.message.type);
 
     receivedMessage.message.id = uuidV1();
 
@@ -46,7 +46,7 @@ wss.on('connection', (client) => {
         receivedMessage.message.type = 'incomingNotification';
         break;
     }
-    console.log('receivedMessage id and type:', receivedMessage);
+    // console.log('receivedMessage id and type:', receivedMessage);
     wss.broadcast(receivedMessage);
   });
 

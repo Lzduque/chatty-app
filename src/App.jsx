@@ -16,7 +16,7 @@ class App extends Component {
 
   sendMessageToServer = (msg) => {
     this.socket.send(JSON.stringify(msg));
-    console.log("JSON.stringify(msg): ", JSON.stringify(msg));
+    // console.log("JSON.stringify(msg): ", JSON.stringify(msg));
   }
 
   addMessage = (evt) => {
@@ -27,11 +27,11 @@ class App extends Component {
         username: this.state.currentUser.name,
         content: evt.target.value
       };
-      console.log('evt.target.value', evt.target.value);
+      // console.log('evt.target.value', evt.target.value);
 
       // Send the msg object as a JSON-formatted string.
       this.sendMessageToServer({ message: msg });
-      console.log("msg: ", msg);
+      // console.log("msg: ", msg);
       evt.target.value = '';
     }
   };
@@ -41,15 +41,15 @@ class App extends Component {
 
     if (evt.key === 'Enter') {
       this.setState({currentUser: {name: evt.target.value}});
-      console.log('this.state: ',this.state);
-      console.log('evt.target.value: ',evt.target.value);
+      // console.log('this.state: ',this.state);
+      // console.log('evt.target.value: ',evt.target.value);
 
       let msg = {
         type: "postNotification",
         oldusername: oldusername,
         newusername: evt.target.value
       };
-      console.log('msg: ',msg);
+      // console.log('msg: ',msg);
       this.sendMessageToServer({ message: msg });
 
       evt.target.value = '';
@@ -62,13 +62,13 @@ class App extends Component {
       console.log('Connected to server');
     };
     this.socket.onmessage = (evt) => {
-      console.log('event reciving: ',evt);
-      console.log('event.data reciving: ',evt.data);
-      console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
+      // console.log('event reciving: ',evt);
+      // console.log('event.data reciving: ',evt.data);
+      // console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
 
       if (evt.data == parseInt(evt.data)) {
         this.setState({ users: evt.data });
-        console.log('evt.data', evt.data);
+        // console.log('evt.data', evt.data);
       } else {
         this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
       };
@@ -81,7 +81,7 @@ class App extends Component {
       <div>
       <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
-        <span>
+        <span className="navbar-users">
         {this.state.users} users online
         </span>
       </nav>
