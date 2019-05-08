@@ -22,6 +22,7 @@ class App extends Component {
     if (evt.key === 'Enter') {
 
       let msg = {
+        type: "postMessage",
         username: this.state.currentUser.name,
         content: evt.target.value
       };
@@ -35,10 +36,21 @@ class App extends Component {
   };
 
   addUserName = (evt) => {
+    const oldusername = this.state.currentUser.name;
+
     if (evt.key === 'Enter') {
       this.setState({currentUser: {name: evt.target.value}});
       console.log('this.state: ',this.state);
       console.log('evt.target.value: ',evt.target.value);
+
+      let msg = {
+        type: "postNotification",
+        oldusername: oldusername,
+        newusername: evt.target.value
+      };
+      console.log('msg: ',msg);
+      this.sendMessageToServer({ message: msg });
+
       evt.target.value = '';
     }
   }
@@ -49,13 +61,30 @@ class App extends Component {
       console.log('Connected to server');
     };
     this.socket.onmessage = (evt) => {
-      console.log('event: ',evt);
-      console.log('event.data: ',evt.data);
+      console.log('event reciving: ',evt);
+      console.log('event.data reciving: ',evt.data);
       console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
+
+      // const data = JSON.parse(event.data);
+      // switch(data.type) {
+      //   case "incomingMessage":
+      //     // handle incoming message
+      //     break;
+      //   case "incomingNotification":
+      //     // handle incoming notification
+      //     break;
+      //   default:
+      //     // show an error in the console if the message type is unknown
+      //     throw new Error("Unknown event type " + data.type);
+      // }
 
       this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
     }
   }
+
+//   <div className="message system">
+//   Anonymous1 changed their name to nomnom.
+// </div>
 
   render() {
     return (

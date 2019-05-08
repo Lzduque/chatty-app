@@ -30,8 +30,19 @@ wss.on('connection', (client) => {
     const receivedMessage = JSON.parse(incomingMessage);
     console.log('receivedMessage:', incomingMessage);
     console.log('receivedMessage:', receivedMessage);
+    console.log('receivedMessage.message.type:', receivedMessage.message.type);
+
     receivedMessage.message.id = uuidV1();
-    console.log('receivedMessage id:', receivedMessage);
+
+    switch (receivedMessage.message.type) {
+      case 'postMessage':
+        receivedMessage.message.type = 'incomingMessage';
+        break;
+      case 'postNotification':
+        receivedMessage.message.type = 'incomingNotification';
+        break;
+    }
+    console.log('receivedMessage id and type:', receivedMessage);
     wss.broadcast(receivedMessage);
   });
 
