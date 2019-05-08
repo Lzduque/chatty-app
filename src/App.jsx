@@ -8,11 +8,11 @@ class App extends Component {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Bob"},
       messages: []
     };
     this.addMessage = this.addMessage.bind(this);
-    this.sendMessageToServer = this.sendMessageToServer.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   sendMessageToServer = (msg) => {
@@ -22,38 +22,34 @@ class App extends Component {
 
   addMessage = (evt) => {
     if (evt.key === 'Enter') {
-      let oldMessages = this.state.messages;
-      let newMessages = [
-        ...oldMessages,
-        {
-          id: this.state.messages.length + 1,
-          username: this.state.currentUser.name,
-          content: evt.target.value
-        }
-      ];
-      this.setState({ messages: newMessages });
 
       let msg = {
-        type: 'message',
         username: this.state.currentUser.name,
         content: evt.target.value
       };
 
       // Send the msg object as a JSON-formatted string.
-      this.sendMessageToServer({message: msg});
+      this.sendMessageToServer({ message: msg });
       console.log("msg: ", msg);
 
       evt.target.value = '';
-      console.log("oldMessages: ", oldMessages);
-      console.log("newMessages: ", newMessages);
     }
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    this.socket.onopen = function (event) {
+    this.socket.onopen = (event) => {
       console.log('Connected to server');
     };
+    this.socket.onmessage = (evt) => {
+      console.log('event: ',evt);
+      console.log('event.data: ',evt.data);
+      console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
+      // console.log('this: ',this);
+      // console.log('this.state: ',this.state);
+
+      this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
+    }
   }
 
   render() {
