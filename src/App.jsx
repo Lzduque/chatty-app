@@ -9,7 +9,8 @@ class App extends Component {
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
       currentUser: {name: "Anonymous"},
-      messages: []
+      messages: [],
+      users: 0
     };
   }
 
@@ -65,32 +66,24 @@ class App extends Component {
       console.log('event.data reciving: ',evt.data);
       console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
 
-      // const data = JSON.parse(event.data);
-      // switch(data.type) {
-      //   case "incomingMessage":
-      //     // handle incoming message
-      //     break;
-      //   case "incomingNotification":
-      //     // handle incoming notification
-      //     break;
-      //   default:
-      //     // show an error in the console if the message type is unknown
-      //     throw new Error("Unknown event type " + data.type);
-      // }
-
-      this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
+      if (evt.data == parseInt(evt.data)) {
+        this.setState({ users: evt.data });
+        console.log('evt.data', evt.data);
+      } else {
+        this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
+      };
     }
   }
 
-//   <div className="message system">
-//   Anonymous1 changed their name to nomnom.
-// </div>
 
   render() {
     return (
       <div>
       <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
+        <span>
+        {this.state.users} users online
+        </span>
       </nav>
       <MessageList messages={this.state.messages}/>
       <ChatBar currentUser={this.state.currentUser} addUserName={this.addUserName} addMessage={this.addMessage}/>

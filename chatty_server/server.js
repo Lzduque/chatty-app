@@ -11,13 +11,17 @@ const server = express()
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localcd ..host', () => console.log(`Listening on ${ PORT }`));
 
-// Create the WebSockets server
+// Create the WebSockets server:
 const wss = new SocketServer({ server });
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by the ws parameter in the callback.
 wss.on('connection', (client) => {
   console.log('Client connected');
+
+  wss.clients.forEach(function each(client) {
+    client.send(wss.clients.size);
+  });
 
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
@@ -47,5 +51,10 @@ wss.on('connection', (client) => {
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  client.on('close', () => console.log('Client disconnected'));
+  client.on('close', () => {
+    console.log('Client disconnected');
+    wss.clients.forEach(function each(client) {
+      client.send(wss.clients.size);
+    });
+  });
 });
