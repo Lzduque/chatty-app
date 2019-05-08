@@ -12,6 +12,12 @@ class App extends Component {
       messages: []
     };
     this.addMessage = this.addMessage.bind(this);
+    this.sendMessageToServer = this.sendMessageToServer.bind(this);
+  }
+
+  sendMessageToServer = (msg) => {
+    this.socket.send(JSON.stringify(msg));
+    console.log("JSON.stringify(msg): ", JSON.stringify(msg));
   }
 
   addMessage = (evt) => {
@@ -32,10 +38,10 @@ class App extends Component {
         username: this.state.currentUser.name,
         content: evt.target.value
       };
+
       // Send the msg object as a JSON-formatted string.
-      this.socket.send(JSON.stringify(msg));
+      this.sendMessageToServer({message: msg});
       console.log("msg: ", msg);
-      console.log("JSON.stringify(msg): ", JSON.stringify(msg));
 
       evt.target.value = '';
       console.log("oldMessages: ", oldMessages);
