@@ -14,20 +14,18 @@ const server = express()
 // Create the WebSockets server:
 const wss = new SocketServer({ server });
 
+const colorArray = ['#FF00FF', '#0000FF', '#00FFFF', '#FFFF00'];
+let clientsArray = [];
+console.log('clientsArray: ',clientsArray);
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by the ws parameter in the callback.
 wss.on('connection', (client) => {
   console.log('Client connected');
 
-  const colorArray = ['#FF00FF', '#0000FF', '#00FFFF', '#FFFF00'];
-  // let randomColor;
-
   wss.clients.forEach(function each(client) {
-    let randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
     client.send(wss.clients.size);
-    client.send(randomColor);
-
-    console.log('randomColor: ',randomColor);
+    // console.log('client: ',client);
     // console.log('wss.clients: ',wss.clients);
   });
 
@@ -39,12 +37,28 @@ wss.on('connection', (client) => {
   };
 
   client.on('message', (incomingMessage) => {
+
     const receivedMessage = JSON.parse(incomingMessage);
-    console.log('receivedMessage:', incomingMessage);
+    console.log('incomingMessage:', incomingMessage);
     console.log('receivedMessage:', receivedMessage);
+
+    if (!receivedMessage.message) {
+      clientsArray.push({ userId: receivedMessage.userId ,
+                          userColor: colorArray[Math.floor(Math.random() * colorArray.length)]});
+      console.log('clientsArray: ',clientsArray);
+      return
+    }
+
     console.log('receivedMessage.message.type:', receivedMessage.message.type);
 
     receivedMessage.message.id = uuidV1();
+
+    for (let i = 0; i < clientsArray.length ; i++) {
+      if (clientsArray[i].userId === receivedMessage.message.userId) {
+        receivedMessage.message.userColor = clientsArray[i].userColor;
+      }
+    }
+    console.log('clientsArray: ',clientsArray);
 
     switch (receivedMessage.message.type) {
       case 'postMessage':

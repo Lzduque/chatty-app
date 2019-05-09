@@ -5,7 +5,7 @@ class Message extends Component {
     console.log(this.props.userColor);
     return (
         <div className="message">
-          <span className="message-username" style={{ color: this.props.userColor }} >{this.props.appUsername}</span>
+          <span className="message-username" style={{ color: this.props.userColor }}>{this.props.appUsername}</span>
           <span className="message-content">{this.props.appMessage}</span>
         </div>
     )

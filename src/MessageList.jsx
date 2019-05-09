@@ -8,8 +8,9 @@ class MessageList extends Component {
     super(props);
   }
 
+
   render() {
-    console.log('this.props.color: ',this.props.color);
+    console.log('this.props.color: ',this.props.messages.userColor);
     return (
       <main className="messages">
       { this.props.messages.map((data, index) => {
@@ -18,7 +19,7 @@ class MessageList extends Component {
               key={ data.id }
               appUsername={ data.username }
               appMessage={ data.content }
-              userColor={ this.props.color }
+              userColor={ data.userColor }
             />)
           } else {
             return (<Notification

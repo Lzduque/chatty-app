@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
-      currentUser: {name: "Anonymous"},
+      currentUser: {name: "Anonymous" , id: Math.floor(Math.random()*(100 - 1) + 1)},
       messages: [],
       users: 0
     };
@@ -25,22 +25,25 @@ class App extends Component {
       let msg = {
         type: "postMessage",
         username: this.state.currentUser.name,
+        userId: this.state.currentUser.id,
         content: evt.target.value
       };
-      // console.log('evt.target.value', evt.target.value);
+      console.log('evt.target.value', evt.target.value);
 
       // Send the msg object as a JSON-formatted string.
       this.sendMessageToServer({ message: msg });
-      // console.log("msg: ", msg);
+      console.log("msg: ", msg);
       evt.target.value = '';
     }
   };
 
   addUserName = (evt) => {
     const oldusername = this.state.currentUser.name;
+    const userId = this.state.currentUser.id;
+    console.log('this.state: ',this.state);
 
     if (evt.key === 'Enter') {
-      this.setState({currentUser: {name: evt.target.value}});
+      this.setState({currentUser: {name: evt.target.value, id: userId}});
       // console.log('this.state: ',this.state);
       // console.log('evt.target.value: ',evt.target.value);
 
@@ -58,8 +61,10 @@ class App extends Component {
 
   componentDidMount = () => {
     console.log("componentDidMount <App />");
+    console.log('this.state: ',this.state);
     this.socket.onopen = (event) => {
       console.log('Connected to server');
+      this.sendMessageToServer({ userId: this.state.currentUser.id });
     };
     this.socket.onmessage = (evt) => {
       // console.log('event reciving: ',evt);
@@ -90,7 +95,7 @@ class App extends Component {
         {this.state.users} users online
         </span>
       </nav>
-      <MessageList messages={this.state.messages} color={this.state.color}/>
+      <MessageList messages={this.state.messages} color={this.state.messages.userColor}/>
       <ChatBar currentUser={this.state.currentUser} addUserName={this.addUserName} addMessage={this.addMessage}/>
       </div>
     );
