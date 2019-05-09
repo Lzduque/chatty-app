@@ -1,45 +1,40 @@
-React Boilerplate
-=====================
+# TinyApp Project
 
-A minimal and light dev environment for ReactJS.
+- First project of the lighthouse bootcamp;
+- TinyApp is a full stack web application built with Node and Express that allows users to shorten long URLs (à la bit.ly);
 
-### Usage
+## Final Product
 
-Clone the boilerplate and create your own git repo.
+- Allows the user to store the URLs and its shorten URLs, update them and delete them;
+- Also the URLS pages and its functionalitys are only accessyble to the user that created them;
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+## Dependencies
 
-Install the dependencies and start the server.
+- Node.js
+- Express
+- EJS
+- bcrypt
+- body-parser
+- cookie-session
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+## Getting Started
 
-### Static Files
+- Install all dependencies (using the `npm install` command).
+- Start the server:
 
-You can store static files like images, fonts, etc in the `build` folder.
+  npm install
+  npm start
+  open http://localhost:3000
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+## Screenshots
 
-### Linting
+!['Screenshot of Login Page'](https://github.com/Lzduque/tiny-app/blob/master/docs/login.png?raw=true)
 
-This boilerplate project includes React ESLint configuration.
+!['Screenshot of Register Page'](https://github.com/Lzduque/tiny-app/blob/master/docs/register.png?raw=true)
 
-```
-npm run lint
-```
+!['Screenshot of URLs Index Page'](https://github.com/Lzduque/tiny-app/blob/master/docs/urls_index.png?raw=true)
 
-### Dependencies
+!['Screenshot of URLs Create New Page'](https://github.com/Lzduque/tiny-app/blob/master/docs/urls_new.png?raw=true)
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+!['Screenshot of TinyURL Page'](https://github.com/Lzduque/tiny-app/blob/master/docs/urls_show.png?raw=true)
+

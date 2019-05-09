@@ -8,9 +8,7 @@ class MessageList extends Component {
     super(props);
   }
 
-
   render() {
-    console.log('this.props.color: ',this.props.messages.userColor);
     return (
       <main className="messages">
       { this.props.messages.map((data, index) => {

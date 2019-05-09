@@ -7,59 +7,55 @@ const PORT = 3001;
 
 // Create a new express server
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
   .listen(PORT, '0.0.0.0', 'localcd ..host', () => console.log(`Listening on ${ PORT }`));
 
 // Create the WebSockets server:
 const wss = new SocketServer({ server });
 
-const colorArray = ['#FF00FF', '#0000FF', '#00FFFF', '#FFFF00'];
+// variables to store color and user id
+const colorArray = ['#FF00FF', '#0000FF', '#00FFFF', '#FF6C16'];
 let clientsArray = [];
-console.log('clientsArray: ',clientsArray);
 
-// Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by the ws parameter in the callback.
 wss.on('connection', (client) => {
   console.log('Client connected');
 
+  // update the connected user number
   wss.clients.forEach(function each(client) {
     client.send(wss.clients.size);
-    // console.log('client: ',client);
-    // console.log('wss.clients: ',wss.clients);
   });
 
+  // broadcasting
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
       client.send(JSON.stringify(data));
-      // console.log('data sent to client from servers', data);
     });
   };
 
+  // everytime a message comes --> parse it, check to see what kind of message it is
   client.on('message', (incomingMessage) => {
 
     const receivedMessage = JSON.parse(incomingMessage);
-    console.log('incomingMessage:', incomingMessage);
-    console.log('receivedMessage:', receivedMessage);
 
+    // check to see if it is a message or just the userId
     if (!receivedMessage.message) {
       clientsArray.push({ userId: receivedMessage.userId ,
                           userColor: colorArray[Math.floor(Math.random() * colorArray.length)]});
-      console.log('clientsArray: ',clientsArray);
-      return
+      return;
     }
 
-    console.log('receivedMessage.message.type:', receivedMessage.message.type);
-
-    receivedMessage.message.id = uuidV1();
-
+    // look for a userId that is equal to the one in the message and apply the correct color
     for (let i = 0; i < clientsArray.length ; i++) {
       if (clientsArray[i].userId === receivedMessage.message.userId) {
         receivedMessage.message.userColor = clientsArray[i].userColor;
       }
     }
-    console.log('clientsArray: ',clientsArray);
 
+    // apply a message id
+    receivedMessage.message.id = uuidV1();
+
+    // change the message status depending to the type of the message
     switch (receivedMessage.message.type) {
       case 'postMessage':
         receivedMessage.message.type = 'incomingMessage';
@@ -68,7 +64,7 @@ wss.on('connection', (client) => {
         receivedMessage.message.type = 'incomingNotification';
         break;
     }
-    console.log('receivedMessage id and type:', receivedMessage);
+
     wss.broadcast(receivedMessage);
   });
 

@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Notification extends Component {
-  render() {
-    return (
-      <div className="message system">
-        <span className="notification-content">{this.props.oldUserName} changed their name to {this.props.newUserName}.</span>
-      </div>
-    )
-  }
+function Notification(props) {
+  return (
+    <div className="message system">
+      <span className="notification-content">{props.oldUserName} changed their name to {props.newUserName}.</span>
+    </div>
+  )
 }
 
 export default Notification;

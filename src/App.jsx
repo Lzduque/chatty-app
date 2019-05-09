@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
-
-{/*needs function*/}
 class App extends Component {
   constructor(props) {
     super(props);
@@ -14,11 +12,12 @@ class App extends Component {
     };
   }
 
+  // general sending message - stringify
   sendMessageToServer = (msg) => {
     this.socket.send(JSON.stringify(msg));
-    // console.log("JSON.stringify(msg): ", JSON.stringify(msg));
   }
 
+  // to send the message to the server, when it is a normal message
   addMessage = (evt) => {
     if (evt.key === 'Enter') {
 
@@ -28,59 +27,54 @@ class App extends Component {
         userId: this.state.currentUser.id,
         content: evt.target.value
       };
-      console.log('evt.target.value', evt.target.value);
 
       // Send the msg object as a JSON-formatted string.
       this.sendMessageToServer({ message: msg });
-      console.log("msg: ", msg);
+
       evt.target.value = '';
     }
   };
 
+  // to send the notification to the server, when user changes name
   addUserName = (evt) => {
+    // capture the actual data
     const oldusername = this.state.currentUser.name;
     const userId = this.state.currentUser.id;
-    console.log('this.state: ',this.state);
 
     if (evt.key === 'Enter') {
+      // change the current user name in the state
       this.setState({currentUser: {name: evt.target.value, id: userId}});
-      // console.log('this.state: ',this.state);
-      // console.log('evt.target.value: ',evt.target.value);
 
+      // send the notification to the server to broadcast
       let msg = {
         type: "postNotification",
         oldusername: oldusername,
         newusername: evt.target.value
       };
-      // console.log('msg: ',msg);
       this.sendMessageToServer({ message: msg });
-
       evt.target.value = '';
     }
   }
 
   componentDidMount = () => {
     console.log("componentDidMount <App />");
-    console.log('this.state: ',this.state);
+    // console.log('this.state: ',this.state);
+
+    // when the user connects it sends the userId to the server
     this.socket.onopen = (event) => {
       console.log('Connected to server');
       this.sendMessageToServer({ userId: this.state.currentUser.id });
     };
+
+    // everytime a message comes --> select if it is a color, if it is the user number or a normal message
     this.socket.onmessage = (evt) => {
-      // console.log('event reciving: ',evt);
-      console.log('event.data reciving: ',evt.data);
-      console.log('typeof(evt.data): ', typeof(evt.data));
-      // console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
 
       if (evt.data.startsWith('#')) {
         this.setState({ color: evt.data });
-        console.log('evt.data - color: ', evt.data);
       } else if (evt.data == parseInt(evt.data)) {
         this.setState({ users: evt.data });
-        console.log('evt.data - users: ', evt.data);
       } else {
         this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
-        console.log('this.state: ',this.state)
       };
     }
   }
@@ -95,8 +89,8 @@ class App extends Component {
         {this.state.users} users online
         </span>
       </nav>
-      <MessageList messages={this.state.messages} color={this.state.messages.userColor}/>
-      <ChatBar currentUser={this.state.currentUser} addUserName={this.addUserName} addMessage={this.addMessage}/>
+        <MessageList messages={this.state.messages} color={this.state.messages.userColor}/>
+        <ChatBar currentUser={this.state.currentUser} addUserName={this.addUserName} addMessage={this.addMessage}/>
       </div>
     );
   }
