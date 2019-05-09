@@ -87,3 +87,9 @@ Second Client Window
 First Client Window
 !['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-client-updated-window.png?raw=true)
 
+First and Second Clients Window Side By Side
+!['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-and-second-clients.png?raw=true)
+
+First and Second Clients Window Side By Side - First Client Message
+!['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-and-second-clients-message.png?raw=true)
+
