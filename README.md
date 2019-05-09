@@ -24,16 +24,16 @@
 - Install all dependencies (using the `npm install` command).
 - Start the client server:
 
-  npm install
-  npm start
-  open http://localhost:3000
+  - npm install
+  - npm start
+  - open http://localhost:3000
 
 - Start the main server:
 
-  cd chatty_server/
-  npm install
-  npm start
-  open http://localhost:3001
+  - cd chatty_server/
+  - npm install
+  - npm start
+  - open http://localhost:3001
 
   Both of the servers should be running at the same time for it to work!
 
