@@ -63,14 +63,19 @@ class App extends Component {
     };
     this.socket.onmessage = (evt) => {
       // console.log('event reciving: ',evt);
-      // console.log('event.data reciving: ',evt.data);
+      console.log('event.data reciving: ',evt.data);
+      console.log('typeof(evt.data): ', typeof(evt.data));
       // console.log('JSON.parse(event.data): ',JSON.parse(evt.data));
 
-      if (evt.data == parseInt(evt.data)) {
+      if (evt.data.startsWith('#')) {
+        this.setState({ color: evt.data });
+        console.log('evt.data - color: ', evt.data);
+      } else if (evt.data == parseInt(evt.data)) {
         this.setState({ users: evt.data });
-        // console.log('evt.data', evt.data);
+        console.log('evt.data - users: ', evt.data);
       } else {
         this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
+        console.log('this.state: ',this.state)
       };
     }
   }
@@ -85,7 +90,7 @@ class App extends Component {
         {this.state.users} users online
         </span>
       </nav>
-      <MessageList messages={this.state.messages}/>
+      <MessageList messages={this.state.messages} color={this.state.color}/>
       <ChatBar currentUser={this.state.currentUser} addUserName={this.addUserName} addMessage={this.addMessage}/>
       </div>
     );

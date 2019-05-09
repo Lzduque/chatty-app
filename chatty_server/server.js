@@ -19,8 +19,16 @@ const wss = new SocketServer({ server });
 wss.on('connection', (client) => {
   console.log('Client connected');
 
+  const colorArray = ['#FF00FF', '#0000FF', '#00FFFF', '#FFFF00'];
+  // let randomColor;
+
   wss.clients.forEach(function each(client) {
+    let randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
     client.send(wss.clients.size);
+    client.send(randomColor);
+
+    console.log('randomColor: ',randomColor);
+    // console.log('wss.clients: ',wss.clients);
   });
 
   wss.broadcast = function broadcast(data) {
@@ -32,9 +40,9 @@ wss.on('connection', (client) => {
 
   client.on('message', (incomingMessage) => {
     const receivedMessage = JSON.parse(incomingMessage);
-    // console.log('receivedMessage:', incomingMessage);
-    // console.log('receivedMessage:', receivedMessage);
-    // console.log('receivedMessage.message.type:', receivedMessage.message.type);
+    console.log('receivedMessage:', incomingMessage);
+    console.log('receivedMessage:', receivedMessage);
+    console.log('receivedMessage.message.type:', receivedMessage.message.type);
 
     receivedMessage.message.id = uuidV1();
 
@@ -46,7 +54,7 @@ wss.on('connection', (client) => {
         receivedMessage.message.type = 'incomingNotification';
         break;
     }
-    // console.log('receivedMessage id and type:', receivedMessage);
+    console.log('receivedMessage id and type:', receivedMessage);
     wss.broadcast(receivedMessage);
   });
 
