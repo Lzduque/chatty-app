@@ -54,9 +54,6 @@ First Client Change Name Message
 Second Client Window
 !['Screenshot of Second Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-window.png?raw=true)
 
-Second Client Answer Typing
-!['Screenshot of Second Client Answer Typing'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-answer.png?raw=true)
-
 Second Client Message
 !['Screenshot of Second Client Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-message.png?raw=true)
 
@@ -69,26 +66,11 @@ Second Client Change Name Message
 Second Client Second Message
 !['Screenshot of Second Client Second Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-second-message.png?raw=true)
 
-Third Client Joins Chatty
-!['Screenshot of Third Client Joins Chatty'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-joins.png?raw=true)
-
 Third Client Change Name
 !['Screenshot of Third Client Change Name'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-change-name.png?raw=true)
 
-Third Client Change Name Message
-!['Screenshot of Third Client Change Name Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-name-message.png?raw=true)
-
 Third Client Message
 !['Screenshot of Third Client Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-message.png?raw=true)
-
-Second Client Window
-!['Screenshot of Second Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-updated-window.png?raw=true)
-
-First Client Window
-!['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-client-updated-window.png?raw=true)
-
-First and Second Clients Window Side By Side
-!['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-and-second-clients.png?raw=true)
 
 First and Second Clients Window Side By Side - First Client Message
 !['Screenshot of First Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-and-second-clients-message.png?raw=true)
