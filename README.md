@@ -51,23 +51,14 @@ First Client Change Name
 First Client Change Name Message
 !['Screenshot of First Client Change Name Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/first-client-name-message.png?raw=true)
 
-Second Client Window
-!['Screenshot of Second Client Window'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-window.png?raw=true)
-
 Second Client Message
 !['Screenshot of Second Client Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-message.png?raw=true)
 
 Second Client Change Name
 !['Screenshot of Second Client Change Name'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-change-name.png?raw=true)
 
-Second Client Change Name Message
-!['Screenshot of Second Client Change Name Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/sencond-client-name-message.png?raw=true)
-
 Second Client Second Message
 !['Screenshot of Second Client Second Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/second-client-second-message.png?raw=true)
-
-Third Client Change Name
-!['Screenshot of Third Client Change Name'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-change-name.png?raw=true)
 
 Third Client Message
 !['Screenshot of Third Client Message'](https://github.com/Lzduque/chatty-app/blob/master/docs/third-client-message.png?raw=true)
