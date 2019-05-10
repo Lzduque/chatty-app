@@ -21,6 +21,9 @@ class App extends Component {
   addMessage = (evt) => {
     if (evt.key === 'Enter') {
 
+      // checking empty fields
+      if (!evt.target.value) return;
+
       let msg = {
         type: "postMessage",
         username: this.state.currentUser.name,
@@ -42,6 +45,10 @@ class App extends Component {
     const userId = this.state.currentUser.id;
 
     if (evt.key === 'Enter') {
+
+      // checking empty fields
+      if (!evt.target.value) return;
+
       // change the current user name in the state
       this.setState({currentUser: {name: evt.target.value, id: userId}});
 

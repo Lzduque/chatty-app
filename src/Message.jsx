@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Message(props) {
+function Message({ appMessage , userColor , appUsername}) {
   return (
     <div className="message">
-      <span className="message-username" style={{ color: props.userColor }}>{props.appUsername}</span>
-      <span className="message-content">{props.appMessage}</span>
+      <span className="message-username" style={{ color: userColor }}>{appUsername}</span>
+      <span className="message-content">{appMessage}</span>
     </div>
   )
 }
