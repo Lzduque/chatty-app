@@ -6,11 +6,34 @@ class App extends Component {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
-      currentUser: {name: "Anonymous" , id: Math.floor(Math.random()*(100 - 1) + 1)},
+      currentUser: {name: 'Anonymous' , id: Math.floor(Math.random()*(1000 - 1) + 1)},
       messages: [],
       users: 0
     };
   }
+
+
+  componentDidMount = () => {
+
+    // when the user connects it sends the userId to the server
+    this.socket.onopen = (event) => {
+      console.log('Connected to server');
+      this.sendMessageToServer({ userId: this.state.currentUser.id });
+    };
+
+    // everytime a message comes --> select if it is a color, if it is the user number or a normal message
+    this.socket.onmessage = (evt) => {
+
+      if (evt.data.startsWith('#')) {
+        this.setState({ color: evt.data });
+      } else if (evt.data == parseInt(evt.data)) {
+        this.setState({ users: evt.data });
+      } else {
+        this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
+      };
+    }
+  }
+
 
   // general sending message - stringify
   sendMessageToServer = (msg) => {
@@ -25,7 +48,7 @@ class App extends Component {
       if (!evt.target.value) return;
 
       let msg = {
-        type: "postMessage",
+        type: 'postMessage',
         username: this.state.currentUser.name,
         userId: this.state.currentUser.id,
         content: evt.target.value
@@ -54,7 +77,7 @@ class App extends Component {
 
       // send the notification to the server to broadcast
       let msg = {
-        type: "postNotification",
+        type: 'postNotification',
         oldusername: oldusername,
         newusername: evt.target.value
       };
@@ -63,36 +86,12 @@ class App extends Component {
     }
   }
 
-  componentDidMount = () => {
-    console.log("componentDidMount <App />");
-    // console.log('this.state: ',this.state);
-
-    // when the user connects it sends the userId to the server
-    this.socket.onopen = (event) => {
-      console.log('Connected to server');
-      this.sendMessageToServer({ userId: this.state.currentUser.id });
-    };
-
-    // everytime a message comes --> select if it is a color, if it is the user number or a normal message
-    this.socket.onmessage = (evt) => {
-
-      if (evt.data.startsWith('#')) {
-        this.setState({ color: evt.data });
-      } else if (evt.data == parseInt(evt.data)) {
-        this.setState({ users: evt.data });
-      } else {
-        this.setState({ messages: this.state.messages.concat(JSON.parse(evt.data).message)});
-      };
-    }
-  }
-
-
   render() {
     return (
       <div>
-      <nav className="navbar">
-        <a href="/" className="navbar-brand">Chatty</a>
-        <span className="navbar-users">
+      <nav className='navbar'>
+        <a href='/' className='navbar-brand'>Chatty</a>
+        <span className='navbar-users'>
         {this.state.users} users online
         </span>
       </nav>

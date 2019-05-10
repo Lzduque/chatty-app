@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-function Notification(props) {
+function Notification({ oldUserName, newUserName}) {
   return (
     <div className="message system">
-      <span className="notification-content">{props.oldUserName} changed their name to {props.newUserName}.</span>
+      <span className="notification-content">{oldUserName} changed their name to {newUserName}.</span>
     </div>
   )
 }
