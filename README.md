@@ -1,6 +1,5 @@
 # TinyApp Project
 
-- First project of the lighthouse bootcamp;
 - A client-side SPA (single-page app) built with ReactJS, based on HTML and CSS. Contains a chat log displaying messages and notifications. Contains an input field to change name and input field to send messages.
 - This client-side app communicates with a server via WebSockets for multi-user real-time updates. No persistent database is involved; the focus is on the client-side experience.
 
